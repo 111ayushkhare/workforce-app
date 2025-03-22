@@ -1,0 +1,62 @@
+# Java specific
+*.class
+*.log
+*.jar
+*.war
+*.ear
+
+# Compiled class files
+bin/
+
+# Maven specific
+.mvn/
+target/
+
+# Maven wrapper
+mvnw
+mvnw.cmd
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.settings/
+*.launch
+*.classpath
+*.project
+
+# NetBeans
+nbproject/
+
+# VS Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Dependency directories
+*/node_modules/
+
+# Build directories
+dist/
+build/
+
+# Docker
+.docker/
+
+# Kubernetes
+.k8s/
+
