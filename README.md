@@ -74,27 +74,32 @@ Each microservice can be run independently using the following command:
 
 ---
 
-## Dockerization (Optional)
+## Dockerization
 
-You can also run the microservices inside Docker containers for better isolation and ease of deployment.
+You can run the microservices inside Docker containers for better isolation and ease of deployment. Docker Compose makes it even easier to manage and run multiple services.
 
-1. **Build Docker Images:**
+### **Build and Run Microservices Using Docker Compose**
 
-   For each microservice, run:
+   Instead of building and running Docker images manually for each microservice, you can use Docker Compose to manage the entire process.
 
-   ```bash
-   docker build -t microservice-name .
-   ```
+   Follow these steps:
 
-2. **Run Docker Containers:**
+   - **Build and Start the Services**:
 
-   After building the Docker images, you can run the containers with:
+     From the root directory (where `docker-compose.yml` is located), run the following command:
 
-   ```bash
-   docker run -p 8080:8080 microservice-name
-   ```
+     ```bash
+     docker-compose up --build
+     ```
 
-   Replace `8080` with the appropriate port for the service.
+     This will build the images for all the services defined in the `docker-compose.yml` file and start the containers. 
+
+   - **Accessing Services**:
+
+     After the containers are running, you can access the services on the following ports:
+
+     - `user-auth` service will be accessible at:  
+       `http://localhost:8081`
 
 ---
 
