@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  # 1st Microservice
+  user-auth-app:
+    container_name: user-auth-container
+    build:
+      context: ./user-auth
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8001"
