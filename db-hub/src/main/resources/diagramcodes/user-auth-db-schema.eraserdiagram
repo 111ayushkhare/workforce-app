@@ -2,8 +2,8 @@ entity-relationship-diagram
 
 users [icon: table, color: green] {
     id bigint pk not null unique
-    firstname varchar(50) not null unique
-    lastname varchar(50) not null unique
+    firstname varchar(50) not null
+    lastname varchar(50) not null
     email varchar(120) not null unique
     phone varchar(13) not null unique
     address varchar(150)
@@ -63,7 +63,7 @@ users [icon: table, color: green] {
     deleted_at timestamp
   }
   
-  users.role_id - roles.id
+  users.role_id > roles.id
   
   services.id < resources.service_id
   resources.id < permissions.resource_id
