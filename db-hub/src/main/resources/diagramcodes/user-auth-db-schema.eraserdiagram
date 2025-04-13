@@ -1,0 +1,73 @@
+entity-relationship-diagram
+
+users [icon: table, color: green] {
+    id bigint pk not null unique
+    firstname varchar(50) not null
+    lastname varchar(50) not null
+    email varchar(120) not null unique
+    phone varchar(13) not null unique
+    address varchar(150)
+    user_type varchar(25)
+    role_id bigint fk not null
+    is_deleted boolean default false
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+  }
+  
+  roles [icon: table, color: green] {
+    id bigint pk not null unique
+    name varchar(25) not null unique
+    is_deleted boolean default false
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+  }
+  
+  services [icon: table, color: green] {
+    id bigint pk not null unique
+    name varchar(25) not null unique
+    is_deleted boolean default false
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+  }
+  
+  resources [icon: table, color: green] {
+    id bigint pk not null unique
+    name varchar(25) not null unique
+    service_id bigint fk not null unique
+    is_deleted boolean default false
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+  }
+  
+  permissions [icon: table, color: green] {
+    id bigint pk not null unique
+    name varchar(50) not null unique
+    resource_id bigint fk not null unique
+    is_deleted boolean default false
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+  }
+  
+  role_permissions [icon: table, color: blue] {
+    id bigint pk not null unique
+    role_id bigint fk not null
+    permissions_id bigint fk not null
+    is_deleted boolean default false
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+  }
+  
+  users.role_id > roles.id
+  
+  services.id < resources.service_id
+  resources.id < permissions.resource_id
+  
+  roles.id > role_permissions.role_id
+  permissions.id > role_permissions.permissions_id
+  
