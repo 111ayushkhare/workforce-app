@@ -1,12 +1,12 @@
-package com.workforce.userauth.enums;
+package com.workforce.userauth.constants;
 
-public enum HealthCheck {
+public enum HealthCheckConstants {
     SERVER_IS_OK("Server is OK !."),
     SERVER_IS_SICK("Server is Sick !.");
 
     private final String value;
 
-    HealthCheck(String value) {
+    HealthCheckConstants(String value) {
         this.value = value;
     }
 

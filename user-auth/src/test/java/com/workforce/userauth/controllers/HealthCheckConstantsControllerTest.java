@@ -1,11 +1,14 @@
 package com.workforce.userauth.controllers;
 
-import com.workforce.userauth.enums.HealthCheck;
+import com.workforce.userauth.constants.HealthCheckConstants;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -14,7 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 @WebMvcTest(HealthCheckController.class)
-class HealthCheckControllerTest {
+class HealthCheckConstantsControllerTest {
 
     private MockMvc mockMvc;
 
@@ -28,7 +31,7 @@ class HealthCheckControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/health-check"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_PLAIN))
-                .andExpect(MockMvcResultMatchers.content().string(HealthCheck.SERVER_IS_OK.getValue()));
+                .andExpect(MockMvcResultMatchers.content().string(HealthCheckConstants.SERVER_IS_OK.getValue()));
     }
 
     @Test
@@ -37,6 +40,6 @@ class HealthCheckControllerTest {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/health-issue"))
 //                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
 //                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_PLAIN))
-//                .andExpect(MockMvcResultMatchers.content().string(HealthCheck.SERVER_IS_SICK.getValue()));
+//                .andExpect(MockMvcResultMatchers.content().string(HealthCheckConstants.SERVER_IS_SICK.getValue()));
     }
 }
