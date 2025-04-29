@@ -5,17 +5,20 @@ package com.workforce.userauth {
         class RoleBaseAccessControlMatrixController
         class RolesController
         class UsersController
+        class AuthController
     }
 
     package services {
         interface RoleBaseAccessControlMatrixService
         interface RolesService
         interface UsersService
+        interface AuthService
 
         package impl {
             class RoleBaseAccessControlMatrixServiceImpl
             class RolesServiceImpl
             class UsersServiceImpl
+            class AuthServiceImpl
         }
     }
 
@@ -23,6 +26,7 @@ package com.workforce.userauth {
         interface RoleBaseAccessControlMatrixRepository
         interface RolesRepository
         interface UsersRepository
+        interface AuthRepository
     }
 
     package dto {
@@ -65,8 +69,10 @@ package com.workforce.userauth {
         abstract class ListUtils
     }
 
-    package enums {}
-    package constants {}
+    package constants {
+        class EndpointConstants
+    }
+
     package config {}
 }
 
@@ -204,12 +210,19 @@ class com.workforce.userauth.services.impl.UsersServiceImpl {
     - usersRepository: UsersRepository <<Autowired>>
 }
 
+'Enums
+enum com.workforce.userauth.enums.HealthCheck {
+  SERVER_IS_OK
+  SERVER_IS_SICK
+}
+
 'Relations ::
 
 'Service-Impl
 RoleBaseAccessControlMatrixService <|-- RoleBaseAccessControlMatrixServiceImpl
 RolesService <|-- RolesServiceImpl
 UsersService <|-- UsersServiceImpl
+AuthService <|-- AuthServiceImpl
 
 'Dto
 LookUpByRequestDto --> RequestValidationDto : uses
@@ -225,11 +238,13 @@ ServiceMap *-- ResourceMap : contains
 RoleBaseAccessControlMatrixController --> RoleBaseAccessControlMatrixService : uses
 RolesController --> RolesService : uses
 UsersController --> UsersService : uses
+AuthController --> AuthService : uses
 
 'ServiceImp-Repository
 RoleBaseAccessControlMatrixServiceImpl --> RoleBaseAccessControlMatrixRepository : uses
 RolesServiceImpl --> RolesRepository : uses
 UsersServiceImpl --> UsersRepository : uses
+AuthServiceImpl --> AuthRepository : uses
 
 'Notes
 note top of ApiResponseDto

@@ -1,6 +1,6 @@
 package com.workforce.userauth.controllers;
 
-import com.workforce.userauth.constants.HealthCheckConstants;
+import com.workforce.userauth.enums.HealthCheck;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,11 +18,11 @@ public class HealthCheckController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.TEXT_PLAIN)
-                .body(HealthCheckConstants.SERVER_IS_OK.getValue());
+                .body(HealthCheck.SERVER_IS_OK.getValue());
     }
 
     @GetMapping("/health-issue")
     public ResponseEntity<String> oopsSomeError() {
-        throw new RuntimeException(HealthCheckConstants.SERVER_IS_SICK.getValue());
+        throw new RuntimeException(HealthCheck.SERVER_IS_SICK.getValue());
     }
 }
