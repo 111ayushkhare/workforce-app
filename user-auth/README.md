@@ -15,7 +15,7 @@ The **User-Auth** microservice is responsible for managing user accounts, authen
 Below is the low-level class diagram representing the core components and relationships within the `user-auth` service:
 
 <div style="overflow-x: auto; padding: 2px;">
-  <img src="src/main/resources/class-diagram.svg" alt="User Auth Class Diagram" style="max-width: 2400px; min-width: 800px;">
+  <img src="src/main/resources/class-diagram.svg" alt="User Auth Class Diagram" style="max-width: none; min-width: 800px;">
 </div>
 
 ---
