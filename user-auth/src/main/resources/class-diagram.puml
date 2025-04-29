@@ -1,0 +1,255 @@
+@startuml
+
+package com.workforce.userauth {
+    package controllers {
+        class RoleBaseAccessControlMatrixController
+        class RolesController
+        class UsersController
+        class AuthController
+    }
+
+    package services {
+        interface RoleBaseAccessControlMatrixService
+        interface RolesService
+        interface UsersService
+        interface AuthService
+
+        package impl {
+            class RoleBaseAccessControlMatrixServiceImpl
+            class RolesServiceImpl
+            class UsersServiceImpl
+            class AuthServiceImpl
+        }
+    }
+
+    package repositories {
+        interface RoleBaseAccessControlMatrixRepository
+        interface RolesRepository
+        interface UsersRepository
+        interface AuthRepository
+    }
+
+    package dto {
+        package response {
+            class ApiResponseDto
+        }
+
+        package request {
+            interface RequestValidationDto
+
+            package lookup {
+                interface LookUpByRequestDto
+                interface ListLookUpByRequestDto
+
+                package impl {
+                    class LookUpByRequestDtoImpl
+                    class ListLookUpByRequestDtoImpl
+                }
+            }
+
+            package rbac {
+                class RbacMatrixDto
+                class ServiceMap
+                class ResourceMap
+            }
+
+            package roles {
+                class CreateRoleRequestDto
+                class UpdateRoleRequestDto
+            }
+            package users {
+                class CreateUserRequestDto
+                class UpdateUserRequestDto
+            }
+        }
+    }
+
+    package utils {
+        abstract class EncryptionUtils
+        abstract class ListUtils
+    }
+
+    package constants {
+        class EndpointConstants
+    }
+
+    package config {}
+}
+
+
+'Dto-details
+class com.workforce.userauth.dto.response.ApiResponseDto {
+    - statusCode: short
+    - message: String
+    - data: T
+}
+
+interface com.workforce.userauth.dto.request.RequestValidationDto {
+    {abstract} + isValid(): boolean
+}
+
+interface com.workforce.userauth.dto.request.lookup.LookUpByRequestDto {
+    - id: Long
+    - name: String
+}
+
+class com.workforce.userauth.dto.request.rbac.RbacMatrixDto {
+    - serviceMap: ServiceMap[]
+}
+
+class com.workforce.userauth.dto.request.rbac.ServiceMap {
+    - service: String
+    - resources: ResourceMap[] resources
+}
+
+class com.workforce.userauth.dto.request.rbac.ResourceMap {
+    - resource: String
+    - permissions: String[]
+}
+
+class com.workforce.userauth.dto.request.roles.CreateRoleRequestDto {
+    - name: String
+    - permissions: Long[]
+}
+class com.workforce.userauth.dto.request.roles.UpdateRoleRequestDto {
+    - name: String
+    - permissions: Long[]
+}
+
+class com.workforce.userauth.dto.request.users.CreateUserRequestDto {
+    - firstname: String
+    - lastname: String
+    - email: String
+    - phone: String
+    - address: String <<optional>>
+    - userType: String <<optional>>
+    - roleId: Long
+}
+class com.workforce.userauth.dto.request.users.UpdateUserRequestDto {
+    - firstname: String
+    - lastname: String
+    - email: String
+    - phone: String
+    - address: String <<optional>>
+    - userType: String <<optional>>
+    - roleId: Long
+}
+
+interface com.workforce.userauth.dto.request.lookup.ListLookUpByRequestDto {
+    - sort: String
+    - sortBy: String
+    - fields: String
+    - search: String
+    - filter: T
+    - pageNumber: int
+    - limit: int
+}
+
+'Controllers-details
+class com.workforce.userauth.controllers.RoleBaseAccessControlMatrixController {
+    - roleBaseAccessControlMatrixService : RoleBaseAccessControlMatrixService <<autowired>>
+    + createRbacMatrix(createRbacMatrixRequestDto: RequestEntity<RbacMatrixRequestDto>): ResponseEntity<ApiResponseDto>
+    + getRbacMatrix(lookUpBy: LookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+    + updateRbacMatrix(lookUpBy: LookUpByRequestDtoImpl, updatePermissionRequestDto: RequestEntity<RbacMatrixRequestDto>): ResponseEntity<ApiResponseDto>
+    + deleteRbacMatrix(lookUpBy: LookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+}
+
+class com.workforce.userauth.controllers.RolesController {
+    - rolesService: RolesService <<autowired>>
+    + createRole(createRoleRequestDto: RequestEntity<CreateRoleRequestDto>): ResponseEntity<ApiResponseDto>
+    + getRole(lookUpBy: LookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+    + listRoles(lookUpBy: ListLookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+    + updateRole(lookUpBy: LookUpByRequestDtoImpl, updateRoleRequestDto: RequestEntity<UpdateRoleRequestDto>): ResponseEntity<ApiResponseDto>
+    + deleteRole(lookUpBy: LookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+    + deleteAllRoles(): ResponseEntity<ApiResponseDto>
+}
+
+class com.workforce.userauth.controllers.UsersController {
+    - usersService: UsersService <<autowired>>
+    + createUser(createUserRequestDto: RequestEntity<CreateUserRequestDto>): ResponseEntity<ApiResponseDto>
+    + getUser(lookUpBy: LookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+    + listUsers(lookUpBy: ListLookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+    + updateUser(lookUpBy: LookUpByRequestDtoImpl, updateUserRequestDto: RequestEntity<UpdateUserRequestDto>): ResponseEntity<ApiResponseDto>
+    + deleteUser(lookUpBy: LookUpByRequestDtoImpl): ResponseEntity<ApiResponseDto>
+    + deleteAllUsers(): ResponseEntity<ApiResponseDto>
+}
+
+'Services detail
+''RBACService
+interface com.workforce.userauth.services.RoleBaseAccessControlMatrixService {
+    - {abstract} createRoleBaseAccessControlMatrix(createRoleBaseAccessControlMatrixRequestDto: RbacMatrixDto)
+    - {abstract} getRoleBaseAccessControlMatrix(lookUpBy: LookUpByRequestDtoImpl)
+    - {abstract} updateRoleBaseAccessControlMatrix(lookUpBy: LookUpByRequestDtoImpl, createRoleBaseAccessControlMatrixRequestDto: RbacMatrixDto)
+    - {abstract} deleteRoleBaseAccessControlMatrix(lookUpBy: LookUpByRequestDtoImpl)
+}
+class com.workforce.userauth.services.impl.RoleBaseAccessControlMatrixServiceImpl {
+    - roleBaseAccessControlMatrixRepository: RoleBaseAccessControlMatrixRepository <<Autowired>>
+}
+
+''RolesService
+interface com.workforce.userauth.services.RolesService {
+    - {abstract} createRole(createRoleRequestDto: CreateRoleRequestDto)
+    - {abstract} getRole(lookUpBy: LookUpByRequestDtoImpl)
+    - {abstract} listRoles(lookUpBy: ListLookUpByRequestDtoImpl)
+    - {abstract} updateRole(lookUpBy: LookUpByRequestDtoImpl, createRoleRequestDto: CreateRoleRequestDto)
+    - {abstract} deleteRole(lookUpBy: LookUpByRequestDtoImpl)
+}
+class com.workforce.userauth.services.impl.RolesServiceImpl {
+    - rolesRepository: RolesRepository <<Autowired>>
+}
+
+''UsersService
+interface com.workforce.userauth.services.UsersService {
+    - {abstract} createUser(createUserRequestDto: CreateUserRequestDto)
+    - {abstract} getUser(lookUpBy: LookUpByRequestDtoImpl)
+    - {abstract} listUsers(lookUpBy: ListLookUpByRequestDtoImpl)
+    - {abstract} updateUser(lookUpBy: LookUpByRequestDtoImpl, createUserRequestDto: CreateUserRequestDto)
+    - {abstract} deleteUser(lookUpBy: LookUpByRequestDtoImpl)
+}
+class com.workforce.userauth.services.impl.UsersServiceImpl {
+    - usersRepository: UsersRepository <<Autowired>>
+}
+
+'Enums
+enum com.workforce.userauth.enums.HealthCheck {
+  SERVER_IS_OK
+  SERVER_IS_SICK
+}
+
+'Relations ::
+
+'Service-Impl
+RoleBaseAccessControlMatrixService <|-- RoleBaseAccessControlMatrixServiceImpl
+RolesService <|-- RolesServiceImpl
+UsersService <|-- UsersServiceImpl
+AuthService <|-- AuthServiceImpl
+
+'Dto
+LookUpByRequestDto --> RequestValidationDto : uses
+ListLookUpByRequestDto --> RequestValidationDto : uses
+
+LookUpByRequestDtoImpl <|-- LookUpByRequestDto
+ListLookUpByRequestDtoImpl <|-- ListLookUpByRequestDto
+
+RbacMatrixDto *-- ServiceMap : contains
+ServiceMap *-- ResourceMap : contains
+
+'Controller-Service
+RoleBaseAccessControlMatrixController --> RoleBaseAccessControlMatrixService : uses
+RolesController --> RolesService : uses
+UsersController --> UsersService : uses
+AuthController --> AuthService : uses
+
+'ServiceImp-Repository
+RoleBaseAccessControlMatrixServiceImpl --> RoleBaseAccessControlMatrixRepository : uses
+RolesServiceImpl --> RolesRepository : uses
+UsersServiceImpl --> UsersRepository : uses
+AuthServiceImpl --> AuthRepository : uses
+
+'Notes
+note top of ApiResponseDto
+Getters and Setters are auto-generated (Lombok @Data)
+end note
+
+@enduml
+
