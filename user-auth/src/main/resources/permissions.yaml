@@ -1,0 +1,8 @@
+access-matrix:
+  user-auth:
+    rbac:
+      permissions: ["CREATE_RBAC", "READ_RBAC", "UPDATE_RBAC", "DELETE_RBAC"]
+    roles:
+      permissions: ["CREATE_ROLE", "READ_ROLE", "UPDATE_ROLE", "DELETE_ROLE"]
+    users:
+      permissions: ["CREATE_USER", "READ_USER", "UPDATE_USER", "DELETE_ROLE"]

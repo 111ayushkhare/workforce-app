@@ -2,8 +2,10 @@ package com.workforce.userauth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
+@EntityScan(basePackages = "com.workforce.models")
 public class UserAuthApplication {
 
 	public static void main(String[] args) {
